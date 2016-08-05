@@ -6,12 +6,11 @@ require 'bank_payments/version'
 Gem::Specification.new do |spec|
   spec.name          = "bank_payments"
   spec.version       = BankPayments::VERSION
-  spec.authors       = ["mikelitton"]
-  spec.email         = ["michael@litton.se"]
+  spec.authors       = ["Michael Litton"]
+  spec.email         = ["michael.litton@apoex.se"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "For generating payment files for various banks"
+  spec.homepage      = "https://github.com/apoex"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -29,5 +28,12 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rspec", "~> 3.5.0"
+
+  # For IBAN validation
+  spec.add_runtime_dependency "ibandit", "~> 0.11"
+
+  # Ensure correct upcase for swedish characters. This wont be
+  # needed in Ruby 2.4
+  spec.add_runtime_dependency "unicode_utils"
 end
