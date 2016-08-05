@@ -151,4 +151,40 @@ describe BankPayments::SPISU do
       expect(credit_memo.to_s[78-1]).to eq 'M'
     end
   end
+
+  context "with a payment post" do
+    subject { BankPayments::SPISU::PaymentRecord }
+
+    let(:payment_record) do
+      r = subject.new
+
+      r.serial_number   =  1
+      r.reference_msg   =  'Payment for secret deal 2 - with too long info'
+      r.amount_sek      =  100_000
+      r.amount_foreign  =  1_189_104.93
+      r.currency_code   =  'JPY'
+      r.date            =  Date.new(2016,8,5)
+
+      r
+    end
+
+    it "sets the fields correctly" do
+      expect(payment_record.serial_number).to  eq '1'
+      expect(payment_record.reference_msg).to  eq 'PAYMENT FOR SECRET DEAL 2'
+      expect(payment_record.amount_sek).to     eq '10000000'
+      expect(payment_record.amount_foreign).to eq '118910493'
+      expect(payment_record.currency_code).to  eq 'JPY'
+      expect(payment_record.date).to           eq '160805'
+    end
+
+    it "serializes correctly" do
+      expect(payment_record.to_s).to eq \
+        '60000001PAYMENT FOR SECRET DEAL 200010000000          JPY160805  0000118910493  '
+    end
+
+    it "does have usual valules at pos. 44 and 78, compared with credit memos" do
+      expect(payment_record.to_s[44-1]).to eq '0'
+      expect(payment_record.to_s[78-1]).to eq '3'
+    end
+  end
 end
