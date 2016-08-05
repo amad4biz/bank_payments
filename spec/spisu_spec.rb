@@ -187,4 +187,16 @@ describe BankPayments::SPISU do
       expect(payment_record.to_s[78-1]).to eq '3'
     end
   end
+
+  context "with the national bank reason" do
+    subject { BankPayments::SPISU::ReasonRecord }
+    it "sets the code at the right place" do
+      reason = subject.new
+      reason.serial_number = 1
+      reason.code          = 101
+
+      expect(reason.to_s).to eq \
+        '70000001101                                                                     '
+    end
+  end
 end

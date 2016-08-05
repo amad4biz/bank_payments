@@ -11,6 +11,7 @@ require "bank_payments/spisu/bank_record"
 require "bank_payments/spisu/amount_record"
 require "bank_payments/spisu/credit_memo_record"
 require "bank_payments/spisu/payment_record"
+require "bank_payments/spisu/reason_record"
 
 
 module BankPayments
