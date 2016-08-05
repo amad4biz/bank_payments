@@ -93,4 +93,20 @@ describe BankPayments::SPISU do
       expect(record.to_s).to eq '20000001ABO OY                                                                  '
     end
   end
+
+  context "with an address record" do
+    subject { BankPayments::SPISU::AddressRecord }
+
+    it "sets the right values in the right places" do
+      record = subject.new
+      record.serial_number = 1
+      record.address       = 'Virkesvägen 12 120 30 Stockholm'
+      record.country_code  = 'SE'
+      record.account_type  = BankPayments::SPISU::AccountType::DEPOSIT_ACCOUNT
+      record.cost_carrier  = BankPayments::SPISU::CostResponsibility::OWN_EXPENSES
+      record.priority      = BankPayments::SPISU::Priority::NORMAL
+
+      expect(record.to_s).to eq '30000001VIRKESVÄGEN 12 120 30 STOCKHOLM                                  0SE 2 0'
+    end
+  end
 end
