@@ -99,5 +99,12 @@ module BankPayments::SPISU
         super
       end
     end
+
+    # Ensure that we include the defined fields in the parent but still
+    # allow them to be overwritten. We can't use @@fields because certain
+    # fields that share their name between classes will be overwritten
+    def self.inherited(base)
+      base.instance_variable_set(:@fields, @fields)
+    end
   end
 end
