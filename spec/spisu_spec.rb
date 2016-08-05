@@ -199,4 +199,29 @@ describe BankPayments::SPISU do
         '70000001101                                                                     '
     end
   end
+
+  context 'with reconciliation' do
+    subject { BankPayments::SPISU::ReconciliationRecord }
+    it "creates a regular line correctly" do
+      rec = subject.new
+      rec.account = '6381040'
+      rec.sum_amount_sek       = 100.45
+      rec.sum_amount_foreign,  = 10.58
+      rec.total_beneficiaries, = 1
+      rec.total_records,       = 4
+      expect(rec.to_s).to eq \
+        "906381040000000010045          000000000001000000000004        000000000001058  "
+    end
+
+    it "handles negative totals according to specification" do
+      rec = subject.new
+      rec.account = '6381040'
+      rec.sum_amount_sek       = -100.45
+      rec.sum_amount_foreign,  = -10.58
+      rec.total_beneficiaries, = 1
+      rec.total_records,       = 4
+      expect(rec.to_s).to eq \
+        "90638104000000001004N          000000000001000000000004        00000000000105Q  "
+    end
+  end
 end
