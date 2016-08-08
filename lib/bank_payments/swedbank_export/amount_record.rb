@@ -1,4 +1,4 @@
-module BankPayments::SPISU
+module BankPayments::SwedbankExport
   class AmountRecord < Record
 
     define_field :serial_number,  '2:8:N'

@@ -1,4 +1,4 @@
-module BankPayments::SPISU
+module BankPayments::SwedbankExport
   class PaymentRecord < AmountRecord
 
     def initialize

@@ -1,4 +1,4 @@
-module BankPayments::SPISU
+module BankPayments::SwedbankExport
   class CreditMemoRecord < AmountRecord
 
     DIGIT_MAP = {

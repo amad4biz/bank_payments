@@ -1,4 +1,4 @@
-module BankPayments::SPISU
+module BankPayments::SwedbankExport
   class ReconciliationRecord < Record
 
     define_field :account,             '2:9:N'

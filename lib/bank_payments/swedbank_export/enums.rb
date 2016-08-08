@@ -1,4 +1,4 @@
-module BankPayments::SPISU
+module BankPayments::SwedbankExport
 
   module AccountType
     DEPOSIT_ACCOUNT  = 0

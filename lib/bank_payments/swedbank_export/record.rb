@@ -5,7 +5,7 @@ require 'unicode_utils/upcase'
 # for Swedbank international payments.
 #
 # Written by Michael Litton
-module BankPayments::SPISU
+module BankPayments::SwedbankExport
   class Record
     def initialize
       @data   = ' ' * 80

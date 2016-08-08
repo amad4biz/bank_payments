@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe BankPayments::SPISU do
+describe BankPayments::SwedbankExport do
 
   context "with an abstract record" do
-    subject { BankPayments::SPISU::Record }
+    subject { BankPayments::SwedbankExport::Record }
 
     it "has correct length" do
       expect(subject.new.to_s.size).to eq 80
@@ -32,7 +32,7 @@ describe BankPayments::SPISU do
   end
 
   context "with an opening record" do
-    subject { BankPayments::SPISU::OpeningRecord }
+    subject { BankPayments::SwedbankExport::OpeningRecord }
 
     it "sets type to zero" do
       record = subject.new
@@ -83,7 +83,7 @@ describe BankPayments::SPISU do
   end
 
   context "with a name record" do
-    subject { BankPayments::SPISU::NameRecord }
+    subject { BankPayments::SwedbankExport::NameRecord }
 
     it "creates a correct name record" do
       record = subject.new
@@ -96,16 +96,16 @@ describe BankPayments::SPISU do
   end
 
   context "with an address record" do
-    subject { BankPayments::SPISU::AddressRecord }
+    subject { BankPayments::SwedbankExport::AddressRecord }
 
     it "sets the right values in the right places" do
       address = subject.new
       address.serial_number = 1
       address.address       = 'Virkesvägen 12 120 30 Stockholm'
       address.country_code  = 'SE'
-      address.account_type  = BankPayments::SPISU::AccountType::DEPOSIT_ACCOUNT
-      address.cost_carrier  = BankPayments::SPISU::CostResponsibility::OWN_EXPENSES
-      address.priority      = BankPayments::SPISU::Priority::NORMAL
+      address.account_type  = BankPayments::SwedbankExport::AccountType::DEPOSIT_ACCOUNT
+      address.cost_carrier  = BankPayments::SwedbankExport::CostResponsibility::OWN_EXPENSES
+      address.priority      = BankPayments::SwedbankExport::Priority::NORMAL
 
       expect(address.to_s).to \
         eq '30000001VIRKESVÄGEN 12 120 30 STOCKHOLM                                  0SE 2 0'
@@ -113,7 +113,7 @@ describe BankPayments::SPISU do
   end
 
   context "with a bank record" do
-    subject { BankPayments::SPISU::BankRecord }
+    subject { BankPayments::SwedbankExport::BankRecord }
 
     it "saves BIC (SWITFT) and IBAN numbers" do
       bank = subject.new
@@ -126,7 +126,7 @@ describe BankPayments::SPISU do
   end
 
   context "with a credit memo record" do
-    subject { BankPayments::SPISU::CreditMemoRecord }
+    subject { BankPayments::SwedbankExport::CreditMemoRecord }
 
     let(:credit_memo) do
       credit_memo = subject.new
@@ -153,7 +153,7 @@ describe BankPayments::SPISU do
   end
 
   context "with a payment post" do
-    subject { BankPayments::SPISU::PaymentRecord }
+    subject { BankPayments::SwedbankExport::PaymentRecord }
 
     let(:payment_record) do
       r = subject.new
@@ -189,7 +189,7 @@ describe BankPayments::SPISU do
   end
 
   context "with the national bank reason" do
-    subject { BankPayments::SPISU::ReasonRecord }
+    subject { BankPayments::SwedbankExport::ReasonRecord }
     it "sets the code at the right place" do
       reason = subject.new
       reason.serial_number = 1
@@ -201,7 +201,7 @@ describe BankPayments::SPISU do
   end
 
   context 'with reconciliation' do
-    subject { BankPayments::SPISU::ReconciliationRecord }
+    subject { BankPayments::SwedbankExport::ReconciliationRecord }
     it "creates a regular line correctly" do
       rec = subject.new
       rec.account = '6381040'
