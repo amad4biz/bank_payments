@@ -28,10 +28,8 @@ module BankPayments::SwedbankExport
     # define_field :f1, '2:9:N'
     # define_field :f2, '10:12:AN'
     def self.define_field(field, definition)
-      start, stop, type = definition.split(':')
-      settings = OpenStruct.new(start: start.to_i, stop: stop.to_i, type: type)
-
-      (@fields ||= {})[field] = settings
+      field_class = BankPayments::SwedbankExport::FieldDefinition
+      (@fields ||= {})[field] = field_class.new(field, definition)
     end
 
     def self.defined_fields
@@ -94,8 +92,7 @@ module BankPayments::SwedbankExport
             when 'AN' then set_text_value(*args)
           end
         else
-          length       = s.stop - s.start + 1
-          return_value = @data[s.start-1, length]
+          return_value = @data[s.start-1, s.length]
           (return_value.sub(/^0+/, "") || return_value).strip
         end
       else

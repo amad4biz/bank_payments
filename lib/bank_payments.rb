@@ -7,6 +7,7 @@ require "bank_payments/beneficiary"
 
 require "bank_payments/swedbank_export/enums"
 require "bank_payments/swedbank_export/record"
+require "bank_payments/swedbank_export/field_definition"
 require "bank_payments/swedbank_export/opening_record"
 require "bank_payments/swedbank_export/name_record"
 require "bank_payments/swedbank_export/address_record"

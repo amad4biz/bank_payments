@@ -6,6 +6,7 @@ module BankPayments::SwedbankExport
     define_field :name,          '16:37:AN'
     define_field :address,       '38:72:AN'
     define_field :pay_date,      '73:78:N'
+    define_field :layout,        '79:79:N'
 
     def initialize
       super
@@ -16,7 +17,7 @@ module BankPayments::SwedbankExport
     private
 
     def set_spisu_layout
-      set_value(79,79,'2')
+      self.layout  = '2'
     end
   end
 end
