@@ -1,5 +1,5 @@
 module BankPayments::SwedbankExport
-  class PaymentRecord < AmountRecord
+  class PaymentRecord < MoneyRecord
 
     def initialize
       super

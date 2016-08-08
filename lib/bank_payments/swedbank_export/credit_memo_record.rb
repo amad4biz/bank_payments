@@ -8,7 +8,7 @@ module BankPayments::SwedbankExport
   # but it will appear of a special list at the bank: 'Utestående kreditfakturor'
   #
   # @author Michael Litton
-  class CreditMemoRecord < AmountRecord
+  class CreditMemoRecord < MoneyRecord
 
     DIGIT_MAP = {
       '0' => '-',

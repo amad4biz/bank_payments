@@ -6,7 +6,7 @@ module BankPayments::SwedbankExport
   # implementation that is being used.
   #
   # @author Michael Litton
-  class AmountRecord < Record
+  class MoneyRecord < Record
 
     define_field :serial_number,  '2:8:N'
     define_field :reference_msg,  '9:33:AN'
