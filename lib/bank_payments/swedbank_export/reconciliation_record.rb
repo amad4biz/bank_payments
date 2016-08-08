@@ -26,26 +26,21 @@ module BankPayments::SwedbankExport
     end
 
     def sum_amount_sek=(amount)
-      super(if amount >= 0
-        format_amount(amount)
-      else
-        change_last_digit(format_amount(amount.abs))
-      end)
+      super reformat_sums(amount)
     end
 
-
     def sum_amount_foreign=(amount)
-      super(if amount >= 0
-        format_amount(amount)
-      else
-        change_last_digit(format_amount(amount.abs))
-      end)
+      super reformat_sums(amount)
     end
 
     private
 
-    def format_amount(amount)
-      ("%.2f" % amount).gsub(".","")
+    def reformat_sums(amount)
+      if amount >= 0
+        amount.spisu_format
+      else
+        change_last_digit(amount.abs.spisu_format)
+      end
     end
 
     # Set a special value in positions 44 and 78 (the last digit). This is

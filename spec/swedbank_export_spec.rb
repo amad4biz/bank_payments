@@ -29,6 +29,13 @@ describe BankPayments::SwedbankExport do
       expect(record.to_s).to eq \
         "00DATA    0000000000000000000000000000000000000000000000000000000000000000000000"
     end
+
+    it "only overload the correct methods" do
+      record = subject.new
+      expect {
+        record.some_random_method
+      }.to raise_error(NoMethodError)
+    end
   end
 
   context "with an opening record" do
