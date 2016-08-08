@@ -1,4 +1,9 @@
 module BankPayments::SwedbankExport
+
+
+  # The first record in a sequence which contains information about payer.
+  #
+  # @author Michael Litton
   class OpeningRecord < Record
 
     define_field :account,       '2:9:N'

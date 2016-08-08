@@ -12,6 +12,8 @@ module BankPayments::SwedbankExport
   class Record
     def initialize
       @data   = ' ' * 80
+
+      yield self if block_given?
     end
 
     # Used to set the attributes in child records during

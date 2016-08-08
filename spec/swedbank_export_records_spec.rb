@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BankPayments::SwedbankExport do
+describe 'BankPayments::SwedbankExport - Records' do
 
   context "with an abstract record" do
     subject { BankPayments::SwedbankExport::Record }
