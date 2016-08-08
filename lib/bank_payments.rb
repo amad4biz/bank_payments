@@ -18,7 +18,6 @@ require "bank_payments/swedbank_export/payment_record"
 require "bank_payments/swedbank_export/reason_record"
 require "bank_payments/swedbank_export/reconciliation_record"
 
-
 require "bank_payments/swedbank_export/sequence"
 
 # Includes a simple representation of payments that can be serialized to a
