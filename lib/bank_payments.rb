@@ -4,6 +4,7 @@ Numeric.include CoreExtensions::Numeric::SPISU
 require "bank_payments/version"
 require "bank_payments/international_payment"
 require "bank_payments/beneficiary"
+require "bank_payments/transaction"
 
 require "bank_payments/swedbank_export/enums"
 require "bank_payments/swedbank_export/record"

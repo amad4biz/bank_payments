@@ -51,5 +51,7 @@ describe BankPayments::Beneficiary do
     all_beneficiaries << b3
 
     expect(all_beneficiaries.size).to eq 2
+
+    expect([b1,b2,b3].index(b3)).to eq 2
   end
 end

@@ -22,7 +22,7 @@ module BankPayments::SwedbankExport
   # which describes where the payment should be made. Then you will supply
   # a money record (payment or credit memo) together with it reason to to
   # describe a payment. All of these records will have a unique serial number
-  # for the beneciciary.
+  # for the beneficiary.
   #
   # According to the documentation you can group money records together with the
   # beneficiary given that the have the correct serial number.
@@ -32,20 +32,19 @@ module BankPayments::SwedbankExport
   #
   # @author Michael Litton
   class Sequence
-    attr_reader :records
 
     # Intializes the required records for a sequence given the
     # sends account, name and adress
     def initialize(account, name, address, payment_date = nil)
-      @records = []
+      @initial_records = []
 
-      @records << OpeningRecord.new do |o_record|
+      @initial_records << OpeningRecord.new do |o_record|
         o_record.account = account
         o_record.name    = name
         o_record.address = address
       end
 
-      @records << ReconciliationRecord.new do |r_record|
+      @initial_records << ReconciliationRecord.new do |r_record|
         r_record.account              = account
         r_record.sum_amount_sek       = 0
         r_record.sum_amount_foreign   = 0
@@ -53,14 +52,39 @@ module BankPayments::SwedbankExport
         r_record.total_records        = 2
       end
 
+      @payment_date = payment_date
+
       # TODO Make this thread safe using a mutex?
-      @beneficiary_counter = 0
+      @beneficiaries = []
+    end
+
+    def records
+      all_records = []
+      all_records << @initial_records.first
+
+      @beneficiaries.each_with_index do |entry,index|
+        destination_records = entry[:beneficiary].to_spisu_records
+        moneytary_records   = entry[:transactions].map(&:to_spisu_records)
+
+        [destination_records + moneytary_records].flatten.each do|record|
+          record.serial_number = index
+        end
+
+        all_records << destination_records << moneytary_records
+      end
+
+      all_records << @initial_records.last
+
+      all_records.flatten
     end
 
     # Adds a transaction to an existing beneficiary or creates a
     # new one.
     def add_transaction(beneficiary, transaction)
-
+      find_or_create_beneficiary(beneficiary) do |entry|
+        entry[:transactions] << transaction
+        entry[:transactions].sort_by!(&:amount_sek)
+      end
     end
 
     # Goes through the sequence and validates that in corresponds to the
@@ -71,8 +95,29 @@ module BankPayments::SwedbankExport
 
     private
 
+    def find_or_create_beneficiary(beneficiary)
+      entry = @beneficiaries.find do |entry|
+        entry[:beneficiary] == beneficiary
+      end
+
+      if entry.nil?
+        entry = { beneficiary:  beneficiary, transactions: [] }
+        @beneficiaries << entry
+      end
+
+      if block_given?
+        yield entry
+      else
+        entry
+      end
+    end
+
+    def add_transaction_at(index, transaction)
+      @beneficiaries[index][:transactions] << transaction
+    end
+
     def all_requried_types_present?
-      all_types = @records.map do |record|
+      all_types = records.map do |record|
         if record.is_a?(MoneyRecord)
           'MoneyRecord'
         else
