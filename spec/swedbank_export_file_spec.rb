@@ -12,5 +12,7 @@ describe 'BankPayments::SwedbankExport - File' do
     expect(seq.records.size).to eq 2
     expect(seq.records.first.name).to eq 'SKATTEVERKET'
     expect(seq.records.last.account).to eq tax_office_account
+    expect(seq).to_not be_valid
   end
+
 end

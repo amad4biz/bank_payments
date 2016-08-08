@@ -39,19 +39,51 @@ module BankPayments::SwedbankExport
     def initialize(account, name, address, payment_date = nil)
       @records = []
 
-      @records << OpeningRecord.new do |record|
-        record.account = account
-        record.name    = name
-        record.address = address
+      @records << OpeningRecord.new do |o_record|
+        o_record.account = account
+        o_record.name    = name
+        o_record.address = address
       end
 
-      @records << ReconciliationRecord.new do |record|
-        record.account              = account
-        record.sum_amount_sek       = 0
-        record.sum_amount_foreign   = 0
-        record.total_beneficiaries  = 0
-        record.total_records        = 2
+      @records << ReconciliationRecord.new do |r_record|
+        r_record.account              = account
+        r_record.sum_amount_sek       = 0
+        r_record.sum_amount_foreign   = 0
+        r_record.total_beneficiaries  = 0
+        r_record.total_records        = 2
       end
+
+      # TODO Make this thread safe using a mutex?
+      @beneficiary_counter = 0
+    end
+
+    # Adds a transaction to an existing beneficiary or creates a
+    # new one.
+    def add_transaction(beneficiary, transaction)
+
+    end
+
+    # Goes through the sequence and validates that in corresponds to the
+    # rules in the specification
+    def valid?
+      all_requried_types_present?
+    end
+
+    private
+
+    def all_requried_types_present?
+      all_types = @records.map do |record|
+        if record.is_a?(MoneyRecord)
+          'MoneyRecord'
+        else
+          record.class.name.split('::').last
+        end
+      end
+
+      required_types = %w(OpeningRecord NameRecord AddressRecord BankRecord
+        MoneyRecord ReasonRecord ReconciliationRecord)
+
+      (required_types - all_types.uniq).size == 0
     end
 
   end

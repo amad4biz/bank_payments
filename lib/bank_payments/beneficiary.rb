@@ -1,4 +1,8 @@
 module BankPayments
+
+  # Encapulates all the information about the destination of a payment.
+  #
+  # @author Michael Litton
   class Beneficiary
 
     # Required regular fields
