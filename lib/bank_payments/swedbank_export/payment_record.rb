@@ -7,11 +7,11 @@ module BankPayments::SwedbankExport
     end
 
     def amount_sek=(amount)
-      super format_amount(amount)
+      super amount.spisu_format
     end
 
     def amount_foreign=(amount)
-      super format_amount(amount)
+      super amount.spisu_format
     end
 
   end

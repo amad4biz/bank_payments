@@ -15,12 +15,6 @@ module BankPayments::SwedbankExport
     define_field :currency_code,  '55:57:AN'
     define_field :date,           '58:63:N'
 
-    private
-
-    def format_amount(amount)
-      ("%.2f" % amount).gsub(".","")
-    end
-
   end
 end
 
