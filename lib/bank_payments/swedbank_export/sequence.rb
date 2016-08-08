@@ -114,25 +114,15 @@ module BankPayments::SwedbankExport
     end
 
 
-    def find_or_create_beneficiary(beneficiary)
-      entry = @beneficiaries.find do |entry|
-        entry[:beneficiary] == beneficiary
-      end
+    def find_or_create_beneficiary(beneficiary, &block)
+      entry = @beneficiaries.find { |entry| entry[:beneficiary] == beneficiary }
 
       if entry.nil?
         entry = { beneficiary:  beneficiary, transactions: [] }
         @beneficiaries << entry
       end
 
-      if block_given?
-        yield entry
-      else
-        entry
-      end
-    end
-
-    def add_transaction_at(index, transaction)
-      @beneficiaries[index][:transactions] << transaction
+      yield entry
     end
 
     def all_requried_types_present?
