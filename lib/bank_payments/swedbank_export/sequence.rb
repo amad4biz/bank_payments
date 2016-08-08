@@ -73,7 +73,13 @@ module BankPayments::SwedbankExport
         all_records << destination_records << moneytary_records
       end
 
-      all_records << @initial_records.last
+      reconciliation                      = @initial_records.last
+      reconciliation.sum_amount_sek       = sum_sek_transactions
+      reconciliation.sum_amount_foreign   = sum_foreign_transactions
+      reconciliation.total_beneficiaries  = @beneficiaries.size
+      reconciliation.total_records        = all_records.flatten.size + 1
+
+      all_records << reconciliation
 
       all_records.flatten
     end
@@ -94,6 +100,19 @@ module BankPayments::SwedbankExport
     end
 
     private
+
+    def sum_sek_transactions
+      tnxs = @beneficiaries.map { |e| e[:transactions] }.flatten
+
+      tnxs.inject(0.0) { |sum,e| sum += e.amount_sek }
+    end
+
+    def sum_foreign_transactions
+      tnxs = @beneficiaries.map { |e| e[:transactions] }.flatten
+
+      tnxs.inject(0.0) { |sum,e| sum += e.amount_foreign }
+    end
+
 
     def find_or_create_beneficiary(beneficiary)
       entry = @beneficiaries.find do |entry|

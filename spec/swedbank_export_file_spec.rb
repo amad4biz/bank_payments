@@ -45,6 +45,11 @@ describe 'BankPayments::SwedbankExport - File' do
       end
     end
 
+    # See page 4 in bank_specifications/teknisk_manual_swedbank.pdf
+    let(:expected_record_types) do
+      [0,2,3,4,6,7,2,3,4,5,7,6,7,6,7,2,3,4,5,7,5,7,6,7,6,7,6,7,9].map(&:to_s)
+    end
+
     def create_transaction(amount_eur)
       amount_sek = 9.52 * amount_eur
       BankPayments::Transaction.new(amount_sek, amount_eur, 'EUR', 'Ref #{rand(1000)}', Date.new(2016,8,8), 101)
@@ -68,12 +73,16 @@ describe 'BankPayments::SwedbankExport - File' do
       seq.add_transaction(beneficiary_C, create_transaction(-1))
       seq.add_transaction(beneficiary_C, create_transaction(-2))
 
-      types = seq.records.map(&:type)
+      sequence_records = seq.records
+      types            = sequence_records.map(&:type)
 
       # See page 4 in bank_specifications/teknisk_manual_swedbank.pdf
-      expect(types).to eq \
-        [0,2,3,4,6,7,2,3,4,5,7,6,7,6,7,2,3,4,5,7,5,7,6,7,6,7,6,7,9].map(&:to_s)
+      expect(types).to eq expected_record_types
 
+      expect(sequence_records.last.sum_amount_sek).to      eq '73304'
+      expect(sequence_records.last.sum_amount_foreign).to  eq '7700'
+      expect(sequence_records.last.total_beneficiaries).to eq '3'
+      expect(sequence_records.last.total_records).to       eq '29'
     end
   end
 end
