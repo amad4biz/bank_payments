@@ -1,4 +1,13 @@
 module BankPayments::SwedbankExport
+
+  # Describes a credit to be made. See the parent class for additional information.
+  # The only special thing about this class is how to interpret the date.
+  #
+  # When you set the date it is to interpreted as a soft "expiry date" for the
+  # credit itself. When the date passes the bank will still use it, if possible,
+  # but it will appear of a special list at the bank: 'Utestående kreditfakturor'
+  #
+  # @author Michael Litton
   class CreditMemoRecord < AmountRecord
 
     DIGIT_MAP = {

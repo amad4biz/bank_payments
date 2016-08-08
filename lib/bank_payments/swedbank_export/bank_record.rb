@@ -1,4 +1,10 @@
 module BankPayments::SwedbankExport
+
+  # Describes the beneficiaries / payees bank. All fields are required except
+  # for the name which is only required is the payment is made outside of EU.
+  # This is something that any implementors needs to validate on their own.
+  #
+  # @author Michael Litton
   class BankRecord < Record
 
     define_field :serial_number, '2:8:N'

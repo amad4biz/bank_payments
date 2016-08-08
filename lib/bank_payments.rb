@@ -15,6 +15,11 @@ require "bank_payments/swedbank_export/reason_record"
 require "bank_payments/swedbank_export/reconciliation_record"
 
 
+# Includes a simple representation of payments that can be serialized to a
+# number of different banks. At the time of this writing we'll start by
+# implementing the international payments for Swedbank.
+#
+# @author Michael Litton
 module BankPayments
   # Your code goes here...
 end

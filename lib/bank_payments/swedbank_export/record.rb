@@ -1,11 +1,14 @@
 require 'ostruct'
 require 'unicode_utils/upcase'
 
-# An "abstract" class that is used by records that conforms to the SPISU-format
-# for Swedbank international payments.
-#
-# Written by Michael Litton
 module BankPayments::SwedbankExport
+
+  # An "abstract" class that is used by records that conforms to the SPISU-format
+  # for Swedbank international payments. It's a flat file format that lets
+  # implementations easily describe each row similar to how the documentation is
+  # structured by the bank.
+  #
+  # @author Michael Litton
   class Record
     def initialize
       @data   = ' ' * 80
@@ -81,7 +84,7 @@ module BankPayments::SwedbankExport
       requested_field = method_name.to_s.sub('=','').to_sym
 
       if record_fields.include?(requested_field)
-        is_setter_field = method_name.to_s =~ /=/
+        is_setter_field = method_name =~ /=/
         s               = self.class.settings_for_field(requested_field)
 
         if is_setter_field

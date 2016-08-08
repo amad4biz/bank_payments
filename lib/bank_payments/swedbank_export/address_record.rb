@@ -1,4 +1,12 @@
 module BankPayments::SwedbankExport
+
+  # Used to describe the destination of the transaction being
+  # done as well as some basic transactional information such as
+  #
+  # * Which party/parties should be responsible for the transactional costs
+  # * What kind of Swedbank account that should be used for the transaction
+  #
+  # @author Michael Litton
   class AddressRecord < Record
 
     define_field :serial_number, '2:8:N'

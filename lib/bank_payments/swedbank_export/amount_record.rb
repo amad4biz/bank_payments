@@ -1,4 +1,11 @@
 module BankPayments::SwedbankExport
+
+  # There can be two types of monetary records in a transaction. Payments and
+  # credits sent over to the bank. This is the parent class that describes both.
+  # There is a date present which means different things depending on which
+  # implementation that is being used.
+  #
+  # @author Michael Litton
   class AmountRecord < Record
 
     define_field :serial_number,  '2:8:N'
