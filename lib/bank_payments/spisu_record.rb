@@ -1,7 +1,7 @@
 require 'ostruct'
 require 'unicode_utils/upcase'
 
-module BankPayments::SwedbankExport
+module BankPayments
 
   # An "abstract" class that is used by records that conforms to the SPISU-format
   # for Swedbank international payments. It's a flat file format that lets
@@ -9,7 +9,7 @@ module BankPayments::SwedbankExport
   # structured by the bank.
   #
   # @author Michael Litton
-  class Record
+  class SpisuRecord
     def initialize
       @data   = ' ' * 80
 

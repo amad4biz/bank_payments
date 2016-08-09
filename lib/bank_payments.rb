@@ -5,9 +5,9 @@ require "bank_payments/version"
 require "bank_payments/international_payment"
 require "bank_payments/beneficiary"
 require "bank_payments/transaction"
+require "bank_payments/spisu_record"
 
 require "bank_payments/swedbank_export/enums"
-require "bank_payments/swedbank_export/record"
 require "bank_payments/swedbank_export/field_definition"
 require "bank_payments/swedbank_export/opening_record"
 require "bank_payments/swedbank_export/name_record"
@@ -21,6 +21,9 @@ require "bank_payments/swedbank_export/reconciliation_record"
 
 require "bank_payments/swedbank_export/sequence"
 require "bank_payments/swedbank_export/file"
+
+require "bank_payments/swedbank_import/sequence"
+require "bank_payments/swedbank_import/file"
 
 # Includes a simple representation of payments that can be serialized to a
 # number of different banks. At the time of this writing we'll start by

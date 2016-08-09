@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'BankPayments::SwedbankExport - Records' do
 
   context "with an abstract record" do
-    subject { BankPayments::SwedbankExport::Record }
+    subject { BankPayments::SpisuRecord }
 
     it "has correct length" do
       expect(subject.new.to_s.size).to eq 80
