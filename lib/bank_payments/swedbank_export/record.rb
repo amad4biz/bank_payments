@@ -38,7 +38,7 @@ module BankPayments::SwedbankExport
       @fields || {}
     end
 
-    def self.settings_for_field(field)
+    def self.definition_for(field)
       @fields[field]
     end
 
@@ -85,16 +85,16 @@ module BankPayments::SwedbankExport
 
       if record_fields.include?(requested_field)
         is_setter_field = method_name =~ /=/
-        s               = self.class.settings_for_field(requested_field)
+        definition      = self.class.definition_for(requested_field)
 
         if is_setter_field
-          args = [s.start, s.stop, arguments.first]
-          case s.type
+          args = [definition.start, definition.stop, arguments.first]
+          case definition.type
             when 'N'  then set_numeric_value(*args)
             when 'AN' then set_text_value(*args)
           end
         else
-          return_value = @data[s.start-1, s.length]
+          return_value = @data[definition.start-1, definition.length]
           (return_value.sub(/^0+/, "") || return_value).strip
         end
       else

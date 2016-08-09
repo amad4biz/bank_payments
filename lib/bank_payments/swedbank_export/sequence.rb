@@ -67,7 +67,7 @@ module BankPayments::SwedbankExport
         moneytary_records   = entry[:transactions].map(&:to_spisu_records)
 
         [destination_records + moneytary_records].flatten.each do|record|
-          record.serial_number = index
+          record.serial_number = index + 1
         end
 
         all_records << destination_records << moneytary_records
@@ -97,6 +97,10 @@ module BankPayments::SwedbankExport
     # rules in the specification
     def valid?
       all_requried_types_present?
+    end
+
+    def to_file_data
+      records.join("\n")
     end
 
     private

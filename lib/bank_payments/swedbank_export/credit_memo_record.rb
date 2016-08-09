@@ -29,11 +29,11 @@ module BankPayments::SwedbankExport
     end
 
     def amount_sek=(amount)
-      super change_last_digit(amount.spisu_format)
+      super change_last_digit(amount.abs.spisu_format)
     end
 
     def amount_foreign=(amount)
-      super change_last_digit(amount.spisu_format)
+      super change_last_digit(amount.abs.spisu_format)
     end
 
     private

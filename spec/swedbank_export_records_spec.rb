@@ -157,6 +157,17 @@ describe 'BankPayments::SwedbankExport - Records' do
       expect(credit_memo.to_s[44-1]).to eq '-'
       expect(credit_memo.to_s[78-1]).to eq 'M'
     end
+
+    it "handles negative amounts correctly (by ignoring them)" do
+      credit_memo = subject.new
+      credit_memo.amount_sek          = -99.90
+      credit_memo.amount_foreign      = -10.54
+      credit_memo.currency_code       = 'EUR'
+
+      expect(credit_memo.amount_sek).to     eq '999-'
+      expect(credit_memo.amount_foreign).to eq '105M'
+      expect(credit_memo.currency_code).to  eq 'EUR'
+    end
   end
 
   context "with a payment post" do
