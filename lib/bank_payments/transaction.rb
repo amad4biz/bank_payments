@@ -4,7 +4,7 @@ module BankPayments
   class Transaction
     attr_reader :amount_sek, :amount_foreign, :currency, :message, :pay_date, :reason
 
-    def initialize(amount_sek, amount_foreign, currency, message, pay_date, reason)
+    def initialize(amount_sek:, amount_foreign:, currency:, message:, pay_date:, reason:)
       @amount_sek       = amount_sek
       @amount_foreign   = amount_foreign
       @currency         = currency

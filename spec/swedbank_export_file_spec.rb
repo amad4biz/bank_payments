@@ -50,7 +50,14 @@ describe 'BankPayments::SwedbankExport - File' do
 
     def create_transaction(amount_eur, reference)
       amount_sek = 9.52 * amount_eur
-      BankPayments::Transaction.new(amount_sek, amount_eur, 'EUR', reference, Date.new(2016,8,8), 101)
+      BankPayments::Transaction.new(
+        amount_sek:     amount_sek,
+        amount_foreign: amount_eur,
+        currency:       'EUR',
+        message:        reference,
+        pay_date:       Date.new(2016,8,8),
+        reason:         101
+      )
     end
 
     # Basic test data used for both record level tests as well as a file
