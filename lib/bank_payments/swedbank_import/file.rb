@@ -18,6 +18,7 @@ module BankPayments::SwedbankImport
       data.gsub(/(\r|\n)+/,"\n").each_line do |raw_record|
         if opening_post?(raw_record)
           current_sequence = Sequence.new
+          current_sequence << raw_record
           @sequences << current_sequence
         else
           current_sequence << raw_record

@@ -10,8 +10,8 @@ module BankPayments
   #
   # @author Michael Litton
   class SpisuRecord
-    def initialize
-      @data   = ' ' * 80
+    def initialize(data = ' ' * 80)
+      @data   = data
 
       yield self if block_given?
     end
