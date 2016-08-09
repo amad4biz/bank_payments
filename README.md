@@ -1,5 +1,7 @@
 # BankPayments
 
+[![Coverage Status](https://coveralls.io/repos/github/apoex/bank_payments/badge.svg?branch=master)](https://coveralls.io/github/apoex/bank_payments?branch=master)
+
 Ruby implementation of bank payments. Starting with
 
 * Swedbank International Payment, in SPISU-format
