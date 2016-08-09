@@ -102,17 +102,17 @@ module BankPayments::SwedbankExport
     private
 
     def sum_sek_transactions
-      tnxs = @beneficiaries.map { |e| e[:transactions] }.flatten
-
-      tnxs.inject(0.0) { |sum,e| sum += e.amount_sek }
+      sum_field(:amount_sek)
     end
 
     def sum_foreign_transactions
-      tnxs = @beneficiaries.map { |e| e[:transactions] }.flatten
-
-      tnxs.inject(0.0) { |sum,e| sum += e.amount_foreign }
+      sum_field(:amount_foreign)
     end
 
+    def sum_field(field)
+      tnxs = @beneficiaries.map { |e| e[:transactions] }.flatten
+      tnxs.inject(0.0) { |sum,e| sum += e.send(field) }
+    end
 
     def find_or_create_beneficiary(beneficiary, &block)
       entry = @beneficiaries.find { |entry| entry[:beneficiary] == beneficiary }
