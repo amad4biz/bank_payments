@@ -13,6 +13,23 @@ module BankPayments
         super
         self.type = '6'
       end
+
+      def sum_amount_sek
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
+      def sum_bank_amount_sek
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
+      def sum_amount_foreign
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
+      def transaction_cost
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
     end
   end
 end

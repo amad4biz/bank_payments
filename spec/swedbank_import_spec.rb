@@ -61,7 +61,7 @@ describe 'BankPayments::SwedbankImport - Files' do
   end
 
   it "describes the second transaction" do
-        name_record, address_record, money_record = records[5..7]
+    name_record, address_record, money_record = records[5..7]
 
     expect(name_record.serial_number).to       eq '102'
     expect(name_record.name).to                eq 'ABO OY'
@@ -84,7 +84,17 @@ describe 'BankPayments::SwedbankImport - Files' do
     expect(money_record).to_not                be_corrected_by_bank
   end
 
-  it "creates the reconsiliation correctly"
+  it "creates the reconciliation correctly" do
+    reconciliation_record = records[8]
+
+    expect(reconciliation_record.sum_amount_sek).to      eq 38404.26
+    expect(reconciliation_record.sum_bank_amount_sek).to eq 45106.48
+    expect(reconciliation_record.sum_amount_foreign).to  eq 4136.67
+    expect(reconciliation_record.transaction_cost).to    eq 0.0
+    expect(reconciliation_record.total_beneficiaries).to eq '1'
+    expect(reconciliation_record.total_records).to       eq '7'
+
+  end
 
 
 end

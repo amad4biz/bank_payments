@@ -91,6 +91,7 @@ describe 'BankPayments::SwedbankExport - File' do
       expect(sequence_records.last.sum_amount_sek).to      eq '73304'
       expect(sequence_records.last.sum_amount_foreign).to  eq '7700'
       expect(sequence_records.last.total_beneficiaries).to eq '3'
+
       expect(sequence_records.last.total_records).to       eq '29'
 
       expect(seq).to be_valid
