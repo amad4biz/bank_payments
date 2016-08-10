@@ -24,6 +24,7 @@ require "bank_payments/swedbank_export/file"
 
 require "bank_payments/swedbank_import/sequence"
 require "bank_payments/swedbank_import/file"
+require "bank_payments/swedbank_import/amount_converter"
 
 require "bank_payments/swedbank_import/account_record"
 require "bank_payments/swedbank_import/address_record"

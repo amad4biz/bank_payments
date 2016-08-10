@@ -110,10 +110,14 @@ module BankPayments
     # from the the underlying data. Only used for imports of transaction
     # confirmations
     def extract_date(field)
-      definition = self.class.definition_for(field.to_sym)
-      value      = @data[definition.start-1, definition.length]
+      value      = extract_raw_value(field)
       parts      = value.scan(/\d{2}/)
       Date.new(2000 + parts[0].to_i, parts[1].to_i, parts[2].to_i)
+    end
+
+    def extract_raw_value(field)
+      definition = self.class.definition_for(field.to_sym)
+      @data[definition.start-1, definition.length]
     end
 
     # Ensure that we include the defined fields in the parent but still

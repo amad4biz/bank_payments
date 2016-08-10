@@ -11,6 +11,10 @@ module BankPayments
         super
         self.type = '2'
       end
+
+      def merges_payments
+        extract_raw_value __callee__
+      end
     end
   end
 end

@@ -14,6 +14,36 @@ module BankPayments
         super
         self.type = '5'
       end
+
+      def corrected_by_bank?
+        error_code == '1'
+      end
+
+      def amount_sek
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
+      def bank_amount_sek
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
+      def amount_foreign
+        AmountConverter.value_to_decimal(extract_raw_value __callee__)
+      end
+
+      # Enum with
+      # '0' => The bank has calculated it's value from the foreign amount'
+      # '9' => The bank has calculated it's value form the SEK amount
+      def recalculation_code
+        extract_raw_value __callee__
+      end
+
+      # Enum with
+      # '0' = OK
+      # '1' = Payment corrected by the bank
+      def error_code
+        extract_raw_value __callee__
+      end
     end
   end
 end
