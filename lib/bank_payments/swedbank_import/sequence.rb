@@ -1,7 +1,12 @@
 module BankPayments
   module SwedbankImport
 
-    # Contains all records for a sequence. Records are expected to be a text string
+    # Contains all records for a sequence. The sequence starts with an opening
+    # record followed by an account record, i.e. which account that was debited.
+    # It then alternates three records: Name, Address-and Money Record to
+    # describe a transaction with it's beneficiary.
+    #
+    # Records are expected to be a text string
     # and passed to the sequence through the "<<"-method.
     #
     # @author Michael Litton

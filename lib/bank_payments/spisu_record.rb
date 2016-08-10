@@ -94,12 +94,26 @@ module BankPayments
             when 'AN' then set_text_value(*args)
           end
         else
-          return_value = @data[definition.start-1, definition.length]
-          (return_value.sub(/^0+/, "") || return_value).strip
+          extract_field_value(definition)
         end
       else
         super
       end
+    end
+
+    def extract_field_value(definition)
+      return_value = @data[definition.start-1, definition.length]
+      (return_value.sub(/^0+/, "") || return_value).strip
+    end
+
+    # Used in some child classes in order to construct a ruby Date
+    # from the the underlying data. Only used for imports of transaction
+    # confirmations
+    def extract_date(field)
+      definition = self.class.definition_for(field.to_sym)
+      value      = @data[definition.start-1, definition.length]
+      parts      = value.scan(/\d{2}/)
+      Date.new(2000 + parts[0].to_i, parts[1].to_i, parts[2].to_i)
     end
 
     # Ensure that we include the defined fields in the parent but still

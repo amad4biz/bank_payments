@@ -12,6 +12,14 @@ module BankPayments
         super
         self.type = '0'
       end
+
+      def creation_date
+        extract_date __callee__
+      end
+
+      def previous_bank_day
+        extract_date __callee__
+      end
     end
   end
 end
