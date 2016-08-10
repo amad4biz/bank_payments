@@ -2,7 +2,6 @@ require 'core_extensions/numeric/spisu'
 Numeric.include CoreExtensions::Numeric::SPISU
 
 require "bank_payments/version"
-require "bank_payments/international_payment"
 require "bank_payments/beneficiary"
 require "bank_payments/transaction"
 require "bank_payments/spisu_record"
