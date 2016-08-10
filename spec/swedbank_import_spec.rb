@@ -29,7 +29,13 @@ describe 'BankPayments::SwedbankImport - Files' do
     expect(opening_record.customer_id).to       eq 'SHIPPING HB'
   end
 
-  it "creates the account record correctly"
+  it "creates the account record correctly" do
+    account_record = records[1]
+
+    expect(account_record.debit_account).to    eq '9749749744'
+    expect(account_record.transaction_date).to eq Date.new(2009,12,17)
+  end
+
   it "describes the first transaciton"
   it "describes the second transaction"
   it "creates the reconsiliation correctly"

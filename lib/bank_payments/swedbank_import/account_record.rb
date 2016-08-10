@@ -9,6 +9,10 @@ module BankPayments
         super
         self.type = '1'
       end
+
+      def transaction_date
+        extract_date __callee__
+      end
     end
   end
 end
