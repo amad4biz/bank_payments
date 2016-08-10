@@ -92,7 +92,7 @@ describe 'BankPayments::SwedbankImport - Files' do
     expect(reconciliation_record.sum_amount_foreign).to  eq 4136.67
     expect(reconciliation_record.transaction_cost).to    eq 0.0
     expect(reconciliation_record.total_beneficiaries).to eq '1'
-    expect(reconciliation_record.total_records).to       eq '7'
+    expect(reconciliation_record.total_records).to       eq '9'
 
   end
 
