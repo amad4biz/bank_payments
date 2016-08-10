@@ -60,7 +60,30 @@ describe 'BankPayments::SwedbankImport - Files' do
     expect(money_record).to_not                be_corrected_by_bank
   end
 
-  it "describes the second transaction"
+  it "describes the second transaction" do
+        name_record, address_record, money_record = records[5..7]
+
+    expect(name_record.serial_number).to       eq '102'
+    expect(name_record.name).to                eq 'ABO OY'
+    expect(name_record.currency_code).to       eq 'EUR'
+    expect(name_record.merges_payments).to     eq '0'
+
+    expect(address_record.transaction_id).to   eq '2170079'
+    expect(address_record.payment_method).to   eq '1'
+    expect(address_record.priority).to         eq '0'
+    expect(address_record).to_not              be_express
+    expect(address_record.address).to          eq 'BYVAGEN 12                    731 00 RALA FINLAND'
+    expect(address_record.country_code).to     eq 'FI'
+
+    expect(money_record.serial_number).to      eq '102'
+    expect(money_record.reference).to          eq '1225'
+    expect(money_record.amount_sek).to         eq 40204.26
+    expect(money_record.bank_amount_sek).to    eq 46996.48
+    expect(money_record.amount_foreign).to     eq 4310.00
+    expect(money_record.recalculation_code).to eq '0'
+    expect(money_record).to_not                be_corrected_by_bank
+  end
+
   it "creates the reconsiliation correctly"
 
 
