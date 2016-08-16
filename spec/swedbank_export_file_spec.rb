@@ -41,6 +41,7 @@ describe 'BankPayments::SwedbankExport - File' do
 
     # See page 4 in bank_specifications/teknisk_manual_swedbank.pdf
     let(:expected_record_types) do
+      
       [0,2,3,4,6,7,2,3,4,5,7,6,7,6,7,2,3,4,5,7,5,7,6,7,6,7,6,7,9].map(&:to_s)
     end
 
@@ -65,19 +66,19 @@ describe 'BankPayments::SwedbankExport - File' do
       subject.new(tax_office_account, 'Skatteverket',tax_office_address).tap do |seq|
 
         # Mottagare A, one payment
-        seq.add_transaction(beneficiary_A, create_transaction(10,'Ref 1'))
+        seq.add_transaction(beneficiary_A, create_transaction(10_000_000,'Ref 1'))
 
         # Mottagare B, two payments, one credit memo
-        seq.add_transaction(beneficiary_B, create_transaction(10,'Ref 2'))
-        seq.add_transaction(beneficiary_B, create_transaction(10,'Ref 3'))
-        seq.add_transaction(beneficiary_B, create_transaction(-10,'Ref 4'))
+        seq.add_transaction(beneficiary_B, create_transaction(10_000_000,'Ref 2'))
+        seq.add_transaction(beneficiary_B, create_transaction(10_000_000,'Ref 3'))
+        seq.add_transaction(beneficiary_B, create_transaction(-10_000_000,'Ref 4'))
 
         # Mottagare C, three payments, two credits
-        seq.add_transaction(beneficiary_C, create_transaction(10,'Ref 5'))
-        seq.add_transaction(beneficiary_C, create_transaction(20,'Ref 6'))
-        seq.add_transaction(beneficiary_C, create_transaction(30,'Ref 7'))
-        seq.add_transaction(beneficiary_C, create_transaction(-1,'Ref 8'))
-        seq.add_transaction(beneficiary_C, create_transaction(-2,'Ref 9'))
+        seq.add_transaction(beneficiary_C, create_transaction(10_000_000,'Ref 5'))
+        seq.add_transaction(beneficiary_C, create_transaction(20_000_000,'Ref 6'))
+        seq.add_transaction(beneficiary_C, create_transaction(30_000_000,'Ref 7'))
+        seq.add_transaction(beneficiary_C, create_transaction(-1_000_000,'Ref 8'))
+        seq.add_transaction(beneficiary_C, create_transaction(-2_000_000,'Ref 9'))
       end
     end
 
@@ -88,8 +89,8 @@ describe 'BankPayments::SwedbankExport - File' do
       # See page 4 in bank_specifications/teknisk_manual_swedbank.pdf
       expect(types).to eq expected_record_types
 
-      expect(sequence_records.last.sum_amount_sek).to      eq '73304'
-      expect(sequence_records.last.sum_amount_foreign).to  eq '7700'
+      expect(sequence_records.last.sum_amount_sek).to      eq '73304000000'
+      expect(sequence_records.last.sum_amount_foreign).to  eq '7700000000'
       expect(sequence_records.last.total_beneficiaries).to eq '3'
 
       expect(sequence_records.last.total_records).to       eq '29'

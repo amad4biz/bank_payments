@@ -26,10 +26,13 @@ module BankPayments
       money_record.currency_code   = @currency
       money_record.date            = @pay_date
 
-      reason_record = BankPayments::SwedbankExport::ReasonRecord.new
-      reason_record.code = @reason
-
-      [money_record, reason_record]
+      if amount_sek.abs >= 150_000
+        reason_record = BankPayments::SwedbankExport::ReasonRecord.new
+        reason_record.code = @reason
+        [money_record, reason_record]
+      else
+        [money_record]
+      end
     end
   end
 end
