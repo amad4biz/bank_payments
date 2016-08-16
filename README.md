@@ -1,6 +1,7 @@
 # BankPayments
 
 [![Coverage Status](https://coveralls.io/repos/github/apoex/bank_payments/badge.svg?branch=master)](https://coveralls.io/github/apoex/bank_payments?branch=master)
+[![Build Status](https://travis-ci.org/apoex/bank_payments.svg?branch=master)](https://travis-ci.org/apoex/bank_payments)
 
 Ruby implementation of bank payments. Starting with
 
