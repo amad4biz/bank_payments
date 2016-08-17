@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
 
   # Ensure correct upcase for swedish characters. This wont be
   # needed in Ruby 2.4
-  spec.add_runtime_dependency "unicode_utils"
+  spec.add_runtime_dependency "unicode_utils", "~> 1.4"
 end
