@@ -32,6 +32,6 @@ describe BankPayments::Transaction do
         reason:         101
     )
 
-    expect(tnx.to_spisu_records.size).to eq 1
+    expect(tnx.to_spisu_records.size).to eq 2
   end
 end

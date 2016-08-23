@@ -61,6 +61,11 @@ describe 'BankPayments::SwedbankExport - Records' do
       expect(record.creation_date.size).to eq 6
     end
 
+    it "defaults the creation date if is not supplied" do
+      record = subject.new
+      expect(record.creation_date).to eq Date.today.strftime('%y%m%d')
+    end
+
     it "can contain an optional long name" do
       record = subject.new
       record.name = 'Globally Fantastic Machinery Inc.'

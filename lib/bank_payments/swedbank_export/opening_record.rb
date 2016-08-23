@@ -18,12 +18,17 @@ module BankPayments
         super
         self.type = '0'
         set_spisu_layout
+        set_default_creation_date
       end
 
       private
 
       def set_spisu_layout
         self.layout  = '2'
+      end
+
+      def set_default_creation_date
+        self.creation_date = Date.today
       end
     end
   end
